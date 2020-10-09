@@ -14,12 +14,14 @@ const stat = {
     { name: "Genadi", id: 2 },
     { name: "Ando", id: 3 },
   ],
+
   NewTask: (taskParameters) => functionNewTask(taskParameters),
 
-  futureUser: (taskParameters, name) =>
-    futureUserFunction(taskParameters, name),
+  futureUser: (taskParameters, name, id) =>
+    futureUserFunction(taskParameters, name, id),
 
-  CompletedTask: (taskParameters) => functionCompletedTask(taskParameters),
+  CompletedTask: (taskParameters, id) =>
+    functionCompletedTask(taskParameters, id),
 
   login: (logName) => login(logName),
 };
@@ -47,29 +49,26 @@ const functionNewTask = (taskParameters) => {
   return restart(stat);
 };
 
-const futureUserFunction = (taskParameters, name) => {
+const futureUserFunction = (taskParameters, name, task_id) => {
   stat.currentTasksToBeCompleted.push({
     taskTxt: taskParameters,
     id: id(stat.currentTasksToBeCompleted),
     name: name,
   });
 
-  stat.TasksToPerform = stat.TasksToPerform.filter(
-    (tt) => tt.taskTxt !== taskParameters
-  );
-  console.log(stat.TasksToPerform);
+  stat.TasksToPerform = stat.TasksToPerform.filter((tt) => tt.id !== task_id);
 
   return restart(stat);
 };
 
-const functionCompletedTask = (taskParameters) => {
+const functionCompletedTask = (taskParameters, task_id) => {
   stat.alreadyCompletedTasks.push({
     taskTxt: taskParameters,
     id: id(stat.alreadyCompletedTasks),
   });
 
   stat.currentTasksToBeCompleted = stat.currentTasksToBeCompleted.filter(
-    (tt) => tt.taskTxt !== taskParameters
+    (tt) => tt.id !== task_id
   );
   return restart(stat);
 };

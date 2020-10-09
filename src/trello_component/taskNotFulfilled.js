@@ -22,9 +22,10 @@ class TaskNotFulfilled extends React.Component {
     let participants = <div></div>;
     let txt = "";
   }
-  addTask = (task_N) => {
+  addTask = (task_N, task_id) => {
     this.setState({
       task_N: task_N,
+      task_id: task_id,
     });
 
     this.participants = (
@@ -40,9 +41,10 @@ class TaskNotFulfilled extends React.Component {
   };
 
   selectParticipantName = (name) => {
-    this.props.futureUser(this.state.task_N, name);
+    this.props.futureUser(this.state.task_N, name, this.state.task_id);
     this.setState({
       task_N: "",
+      task_id: "",
     });
     this.participants = <div></div>;
   };
@@ -52,16 +54,11 @@ class TaskNotFulfilled extends React.Component {
       <div key={tt.id}>
         <li className="collection-item">
           <div>
-            <div style={{ marginTop: 20 + "px" }}>{tt.name}</div>
-            <div onClick={() => this.selectParticipantName(tt.name)}>
-              <a className="secondary-content">
-                <i
-                  style={{ marginBottom: 4 + "px" }}
-                  className="material-icons"
-                >
-                  send
-                </i>
-              </a>
+            <div
+              style={{ marginTop: 15 + "px", cursor: "pointer" }}
+              onClick={() => this.selectParticipantName(tt.name)}
+            >
+              {tt.name}
             </div>
           </div>
         </li>
@@ -81,7 +78,7 @@ class TaskNotFulfilled extends React.Component {
               </div>
               <div className="card-action">
                 <a style={{ cursor: "pointer" }}>
-                  <div onClick={() => this.addTask(tt.taskTxt)}>
+                  <div onClick={() => this.addTask(tt.taskTxt, tt.id)}>
                     Performing Person
                   </div>
                 </a>

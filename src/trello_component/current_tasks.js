@@ -6,8 +6,8 @@ const VerticalDistribution = styled.div`
 `;
 
 class TasksInProgress extends React.Component {
-  endTask = (txt) => {
-    this.props.CompletedTask(txt);
+  endTask = (txt, id) => {
+    this.props.CompletedTask(txt, id);
   };
 
   render() {
@@ -26,7 +26,7 @@ class TasksInProgress extends React.Component {
                 <div
                   style={{ cursor: "pointer" }}
                   key={tt.toString() + "t"}
-                  onClick={() => this.endTask(tt.taskTxt)}
+                  onClick={() => this.endTask(tt.taskTxt, tt.id)}
                 >
                   {tt.name}
                   <i className="small material-icons">library_books</i>
